@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/cabecalho">
+<meta charset="ISO-8859-1">
+</head>
+    <body>
+		<div th:insert="layout/menu"></div>
+    <style>
+body {
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.botao {
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    background: #858282;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Estilos da Container */
+.container {
+    position: relative;
+    width: 60px;
+    margin: 20px auto;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    max-width: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.edit-btn, .save-btn {
+    background-color: #569beb;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.edit-btn:hover, .save-btn:hover {
+    background-color: #2809d6;
+}
+
+.confirmation-msg {
+    color: green;
+}
+
+.user-info-container {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.user-info {
+    font-weight: bold;
+}
+
+.user-info:not(.user-info-editable) {
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
+
+.user-info-editable {
+    border: 1px solid #030303;
+    padding: 5px;
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
+
+.user-info-editable[contenteditable="true"] {
+    background-color: #ff0606;
+    text-decoration: underline;
+}
+
+.profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.lateral {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease-out;
+        }
+        .lateral {
+        margin-top: 20px;
+        }
+
+        .lateral a {
+            display: block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        .backdrop a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #818181;
+            font-size: 25px;
+            transition: 0.3s;
+        }
+
+        .backdrop a:hover {
+            color: #f1f1f1;
+        }
+        
+        .lateral a {
+            display: block;
+            margin-bottom: 50px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .lateral a:hover {
+            color: #555;
+        }
+
+        .conteudo {
+            margin-left: 300px;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: margin-left 0.3s ease-out;
+        }
+
+        /* Simula o conteúdo principal */
+        .conteudo p {
+            line-height: 1.6;
+        }
+    </style>
+
+<h2>Sua Conta</h2>
+
+        <div class="profile-picture">
+            <img id="profile-image" src="/img/perfil.jpg" alt="Foto de Perfil">
+            <button class="edit-btn" id="edit-account">Editar Foto</button>
+            <p id="photo-updated" class="confirmation-msg"></p>
+        </div>
+
+        <div class="user-info-container">
+            <p>Usuário: 
+                <span class="user-info" id="username">seu_usuario</span></p>
+            
+            <p>Email: 
+                <span class="user-info" id="email">seu_email@example.com</span></p>
+            
+            <p>Senha: 
+                <span class="user-info" id="password">********</span> <button class="show-password" id="show-password-btn">Mostrar Senha</button></p>
+            
+        </div>
+
+    <script>
+        const showPasswordBtn = document.getElementById('show-password-btn');
+        const passwordSpan = document.getElementById('password');
+        const photoUpdatedMsg = document.getElementById('photo-updated');
+        const editAccountBtn = document.getElementById('edit-account');
+
+        showPasswordBtn.addEventListener('click', () => {
+            if (passwordSpan.textContent === '********') {
+                passwordSpan.textContent = 'senha braba';
+                showPasswordBtn.textContent = 'Ocultar Senha';
+            } else {
+                passwordSpan.textContent = '********';
+                showPasswordBtn.textContent = 'Mostrar Senha';
+            }
+        });
+
+        const updatePhotoBtn = document.getElementById('update-photo');
+
+        updatePhotoBtn.addEventListener('click', () => {
+            // Simulação de atualização de foto
+            photoUpdatedMsg.textContent = 'Foto Atualizada';
+        });
+
+    </script>
+    <script>
+        document.getElementById('toggle-btn').addEventListener('click', function () {
+            const lateral = document.getElementById('lateral');
+            const conteudo = document.querySelector('.conteudo');
+    
+            if (lateral.style.transform === 'translateX(0px)') {
+                lateral.style.transform = 'translateX(-300px)';
+                conteudo.style.marginLeft = '0';
+                this.innerHTML = '&#9776; Abrir';
+            } else {
+                lateral.style.transform = 'translateX(0px)';
+                conteudo.style.marginLeft = '300px';
+                this.innerHTML = '&#10006; Fechar';
+            }
+        });
+    </script>
+        <script>
+            // Verifica se o usuário está logado
+            function checkLogin() {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+        
+                if (isLoggedIn) {
+                    // Usuário está logado, permite o acesso à sua-conta.html
+                    document.getElementById('logout-container').style.display = 'block';
+                    document.getElementById('login-dropdown').style.display = 'none';
+                } else {
+                    // Usuário não está logado, oculta o botão de logout
+                    document.getElementById('logout-container').style.display = 'none';
+                }
+            }
+        
+            // Executa a verificação de login quando a DOM é completamente carregada
+            document.addEventListener("DOMContentLoaded", checkLogin);
+        
+            // Executa a verificação de login novamente quando a página é focada (útil se o usuário voltar da página de login)
+            window.addEventListener("focus", checkLogin);
+        </script> 
+        <div th:insert="layout/rodape"></div>
+</body>
+</html>

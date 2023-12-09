@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/cabecalho">
+<meta charset="ISO-8859-1">
+<title>Tela de Login</title>
+</head>
+<body>
+	
+	<style>
+		.forget label input {
+    margin-right: 3px;
+}
+.forget label a {
+    color: #000000;
+    text-decoration: none;
+    margin-left: 60px;
+}
+.forget label a:hover {
+    text-decoration: underline;
+
+}
+button { 
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    background: #858282;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+}
+.register {
+    font-size: .9em;
+    color: #000000;
+    text-align: center;
+    margin: 25px 0 10px;
+}
+.register p a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+}
+.register p a:hover {
+    text-decoration: underline;
+}
+.inputbox input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    padding:0 35px 0 5px;
+    color: #000000;
+}
+.inputbox ion-icon {
+    position: absolute;
+    right: 8px;
+    color: #000000;
+    font-size: 1.2em;
+    top: 20px;
+}
+.forget{
+    margin: -15px 0 15px;
+    font-size: .9em;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+h2 {
+    font-size: 2em;
+    color: #000000;
+    text-align: center;
+}
+.inputbox {
+    position: relative;
+    margin: 30px 0;
+    width: 310px;
+    border-bottom: 2px solid #9b9898;
+}
+.inputbox label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    color: #000000;
+    font-size: 1em;
+    pointer-events: none;
+    transition: .5s;
+}
+input:focus ~ label
+input:valid ~ label{
+top: -5px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins',sans-serif;
+}
+section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: url('tu_foto.jpeg')no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.form-box{
+    position: relative;
+    width: 400px;
+    height: 450px;
+    background: transparent;
+    border: 2px solid rgba(255,255 ,255 ,0.5 );
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    position: relative;
+    width: 60px;
+    margin: 20px auto;
+  }
+  .btn {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 0;
+    left: 0px;
+    cursor: pointer;
+  }
+  .btn-left {
+    background-color: #333;
+    position: absolute;
+    height: 8px;
+    width: 30px;
+    top: 30px;
+    left: 0px;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .btn-left:before {
+    background-color: #333;
+    position: absolute;
+    width: 30px;
+    height: 8px;
+    content: "";
+    top: -20px;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .btn-left:after {
+    background-color: #333;
+    position: absolute;
+    width: 30px;
+    height: 8px;
+    content: "";
+    top: 20px;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  
+  .btn-right {
+    background-color: #333;
+    position: absolute;
+    height: 8px;
+    width: 30px;
+    top: 30px;
+    left: 30px;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .btn-right:before {
+    background-color: #333;
+    position: absolute;
+    width: 30px;
+    height: 8px;
+    content: "";
+    top: -20px;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .btn-right:after {
+    background-color: #333;
+    position: absolute;
+    width: 30px;
+    height: 8px;
+    content: "";
+    top: 20px;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  
+  .active .btn-left {
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    background: transparent;
+  }
+  .active .btn-left:before {
+    -webkit-transform: rotateZ(45deg) scaleX(1.4) translate(4px, 4px);
+    transform: rotateZ(45deg) scaleX(1.4) translate(4px, 4px);
+  }
+  .active .btn-left:after {
+    -webkit-transform: rotateZ(-45deg) scaleX(1.4) translate(4px, -4px);
+    transform: rotateZ(-45deg) scaleX(1.4) translate(4px, -4px);
+  }
+  .active .btn-right {
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    background: transparent;
+  }
+  .active .btn-right:before {
+    -webkit-transform: rotateZ(-45deg) scaleX(1.4) translate(-4px, 4px);
+    transform: rotateZ(-45deg) scaleX(1.4) translate(-4px, 4px);
+  }
+  .active .btn-right:after {
+    -webkit-transform: rotateZ(45deg) scaleX(1.4) translate(-4px, -4px);
+    transform: rotateZ(45deg) scaleX(1.4) translate(-4px, -4px);
+  }
+  .lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-out;
+}
+.lateral {
+margin-top: 20px;
+}
+
+.lateral a {
+    display: block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.backdrop a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #818181;
+    font-size: 25px;
+    transition: 0.3s;
+}
+
+.backdrop a:hover {
+    color: #f1f1f1;
+}
+
+.lateral a {
+    display: block;
+    margin-bottom: 50px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.lateral a:hover {
+    color: #555;
+}
+
+.conteudo {
+    margin-left: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease-out;
+}
+
+/* Simula o conteúdo principal */
+.conteudo p {
+    line-height: 1.6;
+}
+
+/* Botão para abrir/fechar a lateral */
+#toggle-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 2;
+}
+.lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 300px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-out;
+}
+.lateral {
+margin-top: 20px;
+}
+
+.lateral a {
+  display: block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.backdrop a {
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+  color: #818181;
+  font-size: 25px;
+  transition: 0.3s;
+}
+
+.backdrop a:hover {
+  color: #f1f1f1;
+}
+
+.lateral a {
+  display: block;
+  margin-bottom: 50px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.lateral a:hover {
+  color: #555;
+}
+
+.conteudo {
+  margin-left: 300px;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: margin-left 0.3s ease-out;
+}
+
+/* Simula o conteúdo principal */
+.conteudo p {
+  line-height: 1.6;
+}
+
+/* Botão para abrir/fechar a lateral */
+#toggle-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 2;
+}
+</style>
+	
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="conteudo">
+        <div id="toggle-btn"></div>
+    </div>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+				<form method="post" th:action="@{/usuario/criar}"  style="margin: 10px" onsubmit="return confirm ('Confirma a ação ?')" th:object="${UsuarioModel}">
+                <form id="loginForm" action="suaconta" method="get">
+                    <h2>Criar conta</h2>
+                    <div class="inputbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input type="username" name="nome" placeholder="Digite o seu nome" required>
+                        <label for=""></label>
+                    </div>    
+                     <div class="inputbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input type="username" name="cpf" placeholder="Digite o seu CPF" required>
+                        <label for=""></label>
+                    </div>   
+                    <div class="inputbox">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input type="email"  name="email" placeholder="Digite o seu Email">
+                        <label for=""></label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" name="senha" placeholder="Digite uma senha" required>
+                        <label for=""></label>
+                    </div> 
+                    <div class="forget">
+                        <label for=""><input type="checkbox">Lembrar <a href="#">Esqueci a minha senha</a></label>
+                    </div>
+                    <div class="logar"></div>
+                    <button type="submit">Logar</button>
+                </form>
+            </div>
+        </div>         
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        document.getElementById('toggle-btn').addEventListener('click', function () {
+            const lateral = document.getElementById('lateral');
+            const conteudo = document.querySelector('.conteudo');
+    
+            if (lateral.style.transform === 'translateX(0px)') {
+                lateral.style.transform = 'translateX(-300px)';
+                conteudo.style.marginLeft = '0';
+                this.innerHTML = '&#9776; Abrir';
+            } else {
+                lateral.style.transform = 'translateX(0px)';
+                conteudo.style.marginLeft = '300px';
+                this.innerHTML = '&#10006; Fechar';
+            }
+        });
+    </script>
+        <script>
+            // Função de logout
+            function logout() {
+                // Limpa os dados de login
+                localStorage.removeItem('isLoggedIn');
+                // Redireciona para a página de login ou homepage
+                window.location.href = "login.html";
+            }
+        
+            // Verifica se o usuário está logado
+            function checkLogin() {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+        
+                if (isLoggedIn) {
+                    // Usuário está logado, permite o acesso à sua-conta.html
+                    document.getElementById('logout-container').style.display = 'block';
+                    document.getElementById('login-dropdown').style.display = 'none';
+                } else {
+                    // Usuário não está logado, oculta o botão de logout
+                    document.getElementById('logout-container').style.display = 'none';
+                }
+            }
+        
+            // Executa a verificação de login quando a DOM é completamente carregada
+            document.addEventListener("DOMContentLoaded", checkLogin);
+        
+            // Executa a verificação de login novamente quando a página é focada (útil se o usuário voltar da página de login)
+            window.addEventListener("focus", checkLogin);
+        </script>
+	<!-- Importa o rodape padr�o do sistema -->
+	<div th:insert="layout/rodape"></div>
+</body>
+</html>

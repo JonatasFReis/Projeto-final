@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/cabecalho">
+<meta charset="ISO-8859-1">
+<title>Conecta FAETEC</title>
+</head>
+<body>
+	
+	<div th:insert="layout/menu"></div>
+	
+	<style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .botao {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Estilos para a seção de conteúdo */
+        .content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        /* Estilos para a seção de postagem */
+        .post-section {
+            margin-top: 20px;
+        }
+
+        textarea,
+        input[type="file"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        /* Estilos para a exibição de postagens */
+        .posts-container {
+            margin-top: 30px;
+        }
+
+        .post {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .post:hover {
+            transform: scale(1.1);
+        }
+
+        .post img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 10px;
+        }
+
+        .post-details {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Estilos para a foto de perfil */
+        .profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Estilos para a seção de pesquisa */
+        .search-section {
+            margin-top: 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        #search-button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #search-button:hover {
+            background-color: #555;
+        }
+        
+        .lateral {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease-out;
+        }
+        .lateral {
+        margin-top: 20px;
+        }
+
+        .lateral a {
+            display: block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        .backdrop a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #818181;
+            font-size: 25px;
+            transition: 0.3s;
+        }
+
+        .backdrop a:hover {
+            color: #f1f1f1;
+        }
+        
+        .lateral a {
+            display: block;
+            margin-bottom: 50px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .lateral a:hover {
+            color: #555;
+        }
+
+        .conteudo {
+            margin-left: 300px;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: margin-left 0.3s ease-out;
+        }
+
+        /* Simula o conteúdo principal */
+        .conteudo p {
+            line-height: 1.6;
+        }
+
+        /* Botão para abrir/fechar a lateral */
+        #toggle-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+ 
+    <div class="conteudo">
+        <div id="toggle-btn"></div>
+    </div>
+
+    <section class="content">
+        <div class="post-section">
+            <h2>Postagens</h2>
+            <div id="post-options">
+                <button id="text-post-option">Palavras</button>
+                <button id="image-post-option">Foto</button>
+            </div>
+            
+            <div id="text-post-form">
+                <textarea id="post-text" rows="4" cols="50" placeholder="Escreva o que você está pensando..."></textarea>
+                <input type="text" id="post-tags" placeholder="Tags (separadas por vírgula)">
+                <button id="post-button">Postar</button>
+            </div>
+
+            <div id="image-post-form" style="display: none;">
+                <input type="file" id="post-image" accept="image/*">
+                <input type="text" id="image-post-caption" placeholder="Legenda da Foto">
+                <button id="image-post-button">Postar</button>
+            </div>
+        </div>
+        
+        <div class="posts-container" id="posts-container">
+            <!-- Aqui é onde as postagens serão exibidas -->
+        </div>
+    </section>
+    
+    <script>
+        // Função de logout
+        function logout() {
+            // Limpa os dados de login
+            localStorage.removeItem('isLoggedIn');
+            // Redireciona para a página de login ou homepage
+            window.location.href = "LOGIN(NOVO).html";
+        }
+    
+        // Verifica se o usuário está logado
+        function checkLogin() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+    
+            if (isLoggedIn) {
+                // Usuário está logado, permite o acesso à sua-conta.html
+                document.getElementById('logout-container').style.display = 'block';
+                document.getElementById('login-dropdown').style.display = 'none';
+            } else {
+                // Usuário não está logado, oculta o botão de logout
+                document.getElementById('logout-container').style.display = 'none';
+            }
+        }
+    
+        // Executa a verificação de login quando a DOM é completamente carregada
+        document.addEventListener("DOMContentLoaded", checkLogin);
+    
+        // Executa a verificação de login novamente quando a página é focada (útil se o usuário voltar da página de login)
+        window.addEventListener("focus", checkLogin);
+    </script> 
+    <script>
+
+        const postOptions = document.getElementById('post-options');
+        const textPostForm = document.getElementById('text-post-form');
+        const imagePostForm = document.getElementById('image-post-form');
+
+        postOptions.addEventListener('click', (e) => {
+            if (e.target.id === 'text-post-option') {
+                textPostForm.style.display = 'block';
+                imagePostForm.style.display = 'none';
+            } else if (e.target.id === 'image-post-option') {
+                textPostForm.style.display = 'none';
+                imagePostForm.style.display = 'block';
+            }
+        });
+
+        const postButton = document.getElementById('post-button');
+        const postText = document.getElementById('post-text');
+        const postTagsInput = document.getElementById('post-tags');
+        const postsContainer = document.getElementById('posts-container');
+
+        postButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const postContent = postText.value;
+            const postTags = postTagsInput.value;
+
+            if (postContent.trim() !== '') {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <p>${postContent}</p>
+                    <div class="tags">${generateTags(postTags)}</div>
+                `;
+                postsContainer.appendChild(postElement);
+                postText.value = '';
+                postTagsInput.value = '';
+            }
+        });
+
+        const imagePostButton = document.getElementById('image-post-button');
+        const postImage = document.getElementById('post-image');
+        const imagePostCaption = document.getElementById('image-post-caption');
+
+        imagePostButton.addEventListener('click', (event) => {
+            const selectedFile = postImage.files[0];
+            const caption = imagePostCaption.value;
+
+            if (selectedFile) {
+                const postElement = document.createElement('div');
+                postElement.className = 'post with-image';
+                const imageElement = document.createElement('img');
+                imageElement.src = URL.createObjectURL(selectedFile);
+                postElement.innerHTML = `
+                    <img src="${imageElement.src}" alt="${caption}">
+                    <p>${caption}</p>
+                `;
+                postsContainer.appendChild(postElement);
+                postImage.value = '';
+                imagePostCaption.value = '';
+            }
+        });
+
+        function generateTags(tags) {
+            const tagArray = tags.split(',').map(tag => tag.trim());
+            return tagArray.map(tag => `<span class="tag">#${tag}</span>`).join('');
+        }
+
+        const searchButton = document.getElementById('search-button');
+        const searchInput = document.getElementById('search-input');
+        const posts = document.querySelectorAll('.post');
+
+        searchButton.addEventListener('click', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            posts.forEach(post => {
+                const postContent = post.querySelector('p').textContent.toLowerCase();
+                const postTags = Array.from(post.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+
+                if (postContent.includes(searchTerm) || postTags.includes(searchTerm)) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        });
+            
+    </script>
+    
+<script>
+    document.getElementById('toggle-btn').addEventListener('click', function () {
+        const lateral = document.getElementById('lateral');
+        const conteudo = document.querySelector('.conteudo');
+
+        if (lateral.style.transform === 'translateX(0px)') {
+            lateral.style.transform = 'translateX(-300px)';
+            conteudo.style.marginLeft = '0';
+            this.innerHTML = '&#9776; Abrir';
+        } else {
+            lateral.style.transform = 'translateX(0px)';
+            conteudo.style.marginLeft = '300px';
+            this.innerHTML = '&#10006; Fechar';
+        }
+    });
+</script>
+
+<div th:insert="layout/rodape"></div>
+</body>
+</html>
